@@ -16,3 +16,11 @@ th {
 td {
     padding: 0.3em;
 }
+
+tr:hover {
+    background-color: #b3b3b3;
+}
+
+.header:hover {
+    background-color: white;
+}

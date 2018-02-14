@@ -21,6 +21,10 @@
         let _toprow = document.createElement("tr");
         let toprow = table.appendChild(_toprow);
         
+        // added header class so that the top bar doesn't 
+        // change colour on hover
+        toprow.classList.add('header');
+        
         // Create table headings
         for (let i = -1; i < Object.keys(data['2009-01']).length; i++) {
             let _heading = document.createElement("th");
