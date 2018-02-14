@@ -1,19 +1,80 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<meta charset="utf-8" />
-<meta http-equiv="content-language" content="en" />
-<meta http-equiv="Content-Type" content="UTF-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-<link href="main.css" media="all" rel="stylesheet" type="text/css" />
+    <meta charset="utf-8" />
+    <meta http-equiv="content-language" content="en" />
+    <meta http-equiv="Content-Type" content="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <link href="main.css" media="all" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<script src="jquery-2.1.1.js"></script>
-<script>
-$.getJSON('data.json', function (data) {
-    console.log(data);
-});
-</script>
+    <script src="jquery-2.1.1.js"></script>
+    <script>
+    $.getJSON('data.json', function (data) {
+        
+        // Create table for data to go into
+        let body = document.querySelector("body");
+        let _table = document.createElement("table");
+        let table = body.appendChild(_table);
+        
+        let _toprow = document.createElement("tr");
+        let toprow = table.appendChild(_toprow);
+        
+        // Create table headings
+        for (let i = -1; i < Object.keys(data['2009-01']).length; i++) {
+            let _heading = document.createElement("th");
+            let heading = toprow.appendChild(_heading);
+            if (i == -1) {
+                heading.innerHTML = 'Date';
+            }
+            else {
+                // Alternate dynamic method of getting names of channels
+                // let headings = Object.getOwnPropertyNames(data['2009-01'])
+                // heading.innerHTML = headings[i];
+                heading.innerHTML = channelFormat(i);
+            }
+        }
+        
+        // Insert data into table
+        for (let i = 0; i < Object.keys(data).length; i++) {
+            let date = Object.getOwnPropertyNames(data)[i];
+            let textDate = dateConverter(date);
+            
+            let _newRow = document.createElement('tr');
+            let newRow = table.appendChild(_newRow);
+            
+            for (let j = -1; j < Object.keys(data[date]).length ; j++) {
+                let _td = document.createElement('td');
+                let td = newRow.appendChild(_td);
+                
+                if (j == -1) {
+                    td.innerHTML = textDate;
+                }
+                else {
+                    let x = Object.keys(data[date])[j];
+                    td.innerHTML = data[date][x];
+                }
+            }
+        }
+    });
+        
+    // function to convert YYYY-MM to Month YYYY
+    function dateConverter(date) {
+        let monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                          'July', 'August', 'September', 'October', 'November', 'December'];
+        let myDate = date.split('-');
+        let myMonth = monthNames[parseInt(myDate[1]) - 1] + ' ';
+        let myYear = myDate[0];
+        return myMonth.concat(myYear);
+    }
+    
+        
+    function channelFormat(i) {
+        let channelNames = ['BBC Four', 'BBC News 24', 'BBC One', 'BBC Three', 'BBC Two', 'CBBC', 'CBeebies'];
+        return channelNames[i];
+    }
+        
+    </script>
 </body>
 </html>
