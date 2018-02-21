@@ -33,10 +33,10 @@
                 heading.innerHTML = 'Date';
             }
             else {
-                // Alternate dynamic method of getting names of channels
-                // let headings = Object.getOwnPropertyNames(data['2009-01'])
-                // heading.innerHTML = headings[i];
-                heading.innerHTML = channelFormat(i);
+                let headings = Object.getOwnPropertyNames(data['2009-01'])
+                heading.innerHTML = headings[i];
+                // Alternate method of getting channel names, but uses a list which isn't in the JSON of the channels
+                // heading.innerHTML = channelFormat(i);
             }
         }
         
@@ -73,7 +73,7 @@
         return myMonth.concat(myYear);
     }
     
-        
+    // Used in the other solution to getting channel names.
     function channelFormat(i) {
         let channelNames = ['BBC Four', 'BBC News 24', 'BBC One', 'BBC Three', 'BBC Two', 'CBBC', 'CBeebies'];
         return channelNames[i];
